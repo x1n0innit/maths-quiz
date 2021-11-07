@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        body {
+            height: 100%;
+            width: 90%;
+            background: linear-gradient(270deg, #00ffbd, #006fd3);
+            background-size: 400% 400%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: honeydew;
+
+            -webkit-animation: breathanim 16s ease infinite;
+            -moz-animation: breathanim 16s ease infinite;
+            -o-animation: breathanim 16s ease infinite;
+            animation: breathanim 16s ease infinite;
+
+            @-webkit-keyframes breathanim {
+                0% {
+                background-position: 0% 86%;
+                }
+                50% {
+                background-position: 100% 15%;
+                }
+                100% {
+                background-position: 0% 86%;
+                }
+            }
+            @-moz-keyframes breathanim {
+                0% {
+                background-position: 0% 86%;
+                }
+                50% {
+                background-position: 100% 15%;
+                }
+                100% {
+                background-position: 0% 86%;
+                }
+            }
+            @-o-keyframes breathanim {
+                0% {
+                background-position: 0% 86%;
+                }
+                50% {
+                background-position: 100% 15%;
+                }
+                100% {
+                background-position: 0% 86%;
+                }
+            }
+            @keyframes breathanim {
+                0% {
+                background-position: 0% 86%;
+                }
+                50% {
+                background-position: 100% 15%;
+                }
+                100% {
+                background-position: 0% 86%;
+                }
+            }
+        }   
+
+        #center {
+            display: grid;
+            place-items: center;
+        }
+
+        legend{
+            font-size: 30px;
+        }
+
+        dl{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        dd{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .myButton {
+            box-shadow: 0px 1px 0px 0px #9fb4f2;
+            background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+            background-color:#7892c2;
+            border-radius:15px;
+            border:2px solid #4e6096;
+            display:inline-block;
+            cursor:pointer;
+            color:#ffffff;
+            font-family:Arial;
+            font-size:14px;
+            font-weight:bold;
+            padding:12px 16px;
+            text-decoration:none;
+            text-shadow:0px 1px 0px #283966;
+        }
+        .myButton:hover {
+            background:linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+            background-color:#476e9e;
+        }
+        .myButton:active {
+            position:relative;
+            top:1px;
+        }
+        </style>
+
+        <script>
+            var score = 0;
+            var questionsTried = 0;
+            var num1 = 0;
+            var num2 = 0;
+            let seconds = 10;
+
+            function getQuestion() {
+                if(questionsTried < 5) {
+                    num1 = Math.floor(Math.random() * (6 - 1) + 1);
+                    num2 = Math.floor(Math.random() * (6 - 1) + 1);
+
+                    var placeHere = document.getElementById("replace");
+                    placeHere.innerText = `${num1} x ${num2}`;
+                }
+
+                else if(questionsTried < 15 && questionsTried > 5) {
+                    num1 = Math.floor(Math.random() * (11 - 1) + 1);
+                    num2 = Math.floor(Math.random() * (11 - 1) + 1);
+
+                    var placeHere = document.getElementById("replace");
+                    placeHere.innerText = `${num1} x ${num2}`;
+                }
+
+                else if(questionsTried > 15 && questionsTried < 25) {
+                    num1 = Math.floor(Math.random() * (13 - 3) + 3);
+                    num2 = Math.floor(Math.random() * (13 - 3) + 3);
+
+                    var placeHere = document.getElementById("replace");
+                    placeHere.innerText = `${num1} x ${num2}`;
+                }
+
+                else{
+                    num1 = Math.floor(Math.random() * (13 - 5) + 5);
+                    num2 = Math.floor(Math.random() * (13 - 5) + 5);
+
+                    var placeHere = document.getElementById("replace");
+                    placeHere.innerText = `${num1} x ${num2}`;
+                }
+
+                console.log(num1);
+                console.log(num2);
+            }
+
+            function checkAnswer() {
+                //This is the function I used to check the player's answer.
+
+                var theirAnswer = parseInt(document.getElementById("question1").value);
+                let headerScore = document.getElementById("score");
+
+                if(theirAnswer == num1 * num2) {
+                    console.log(`right answer`);
+                    score++;
+                    questionsTried++;
+                    headerScore.innerHTML = `${score} out of ${questionsTried}`
+                }
+
+                else{
+                    console.log(`wrong answer`);
+                    questionsTried++;
+                    headerScore.innerHTML = `${score} out of ${questionsTried}`
+                }
+
+                seconds = 10;
+                /*
+                console.log(theirAnswer);
+                console.log(questionsTried);
+                console.log(score);
+                */
+                getQuestion(); //This calls the getQuestion function to give the user another question after answering.
+            }
+            
+            function timer() {
+                let headerScore = document.getElementById("score");
+
+                let timedQuestion = setInterval(function(){
+                    document.getElementById("secondsLeft").innerHTML = `${seconds} seconds left`;
+
+                    seconds--;
+                    if(seconds < 0){
+                        getQuestion();
+                        questionsTried++;
+                        headerScore.innerHTML = `${score} out of ${questionsTried}`;
+                        seconds = 10;
+                    }
+                }, 1000);
+            }
+
+            window.onload = function(){
+                timer();
+                getQuestion();
+            }
+        </script>
+    </head>
+    <body>
+        <div id="center">
+            <form name="questions">
+                <fieldset>
+                    <legend>Maths Quiz</legend>
+                    <dl>
+                        <dt><label for="question1" id="replace">Question Here</label></dt>
+                        <dd><input type="text" id="question1"></dd>
+                    </dl>
+
+                    <input type="button" class="myButton" value="Check Answer" onclick="
+                    checkAnswer()">
+
+                </fieldset>            
+            </form>
+        </div>
+        <br><br>
+            <h2 id="score" style="display: grid; place-items: center;">Score Here</h2>
+            <h2 id="secondsLeft" style="display: grid; place-items: center;"></h2>
+    </body>
+</html>
