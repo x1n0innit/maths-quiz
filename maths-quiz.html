@@ -148,8 +148,7 @@
                     placeHere.innerText = `${num1} x ${num2}`;
                 }
 
-                console.log(num1);
-                console.log(num2);
+                console.log(`${num1} x ${num2}`);
             }
 
             function checkAnswer() {
@@ -177,6 +176,8 @@
                 console.log(questionsTried);
                 console.log(score);
                 */
+
+                document.getElementById("question1").value = " ";
                 getQuestion(); //This calls the getQuestion function to give the user another question after answering.
             }
             
