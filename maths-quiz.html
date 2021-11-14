@@ -114,7 +114,7 @@
             var num1 = 0;
             var num2 = 0;
             let seconds = 10;
-
+            
             function getQuestion() {
                 if(questionsTried < 5) {
                     num1 = Math.floor(Math.random() * (6 - 1) + 1);
@@ -200,12 +200,20 @@
             window.onload = function(){
                 timer();
                 getQuestion();
+                //applyEnter();
+
+                document.getElementById('question1').onkeydown = function(e){
+                    if(e.keyCode == 13){
+                        checkAnswer();
+                    }
+                };
             }
         </script>
     </head>
     <body>
+        <br><br><br><br><br><br><br><br><br>
         <div id="center">
-            <form name="questions">
+            <form name="questions" style="width: 30%;" id="form">
                 <fieldset>
                     <legend>Maths Quiz</legend>
                     <dl>
